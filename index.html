@@ -726,6 +726,66 @@
                     transform: translateY(0);
                 }
             }
+
+            /* Footer Styles */
+            .footer {
+                width: 100%;
+                max-width: 1400px;
+                margin-top: 2rem;
+                padding: 1.5rem 0;
+                text-align: center;
+                color: var(--subtext);
+                font-size: 0.95rem;
+                border-top: 1px solid var(--border);
+            }
+            
+            @media (max-width: 767px) {
+                .footer {
+                    margin-top: 1.5rem;
+                    padding: 1rem 0;
+                    font-size: 0.85rem;
+                }
+            }
+            
+            .footer-content {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+                flex-wrap: wrap;
+            }
+            
+            .footer a {
+                color: var(--accent);
+                text-decoration: none;
+                transition: all 0.3s ease;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.3rem;
+            }
+            
+            .footer a:hover {
+                color: var(--accent-muted);
+                transform: translateY(-2px);
+            }
+            
+            .github-icon {
+                width: 20px;
+                height: 20px;
+                vertical-align: middle;
+                transition: transform 0.3s ease;
+            }
+            
+            @media (max-width: 767px) {
+                .github-icon {
+                    width: 18px;
+                    height: 18px;
+                }
+            }
+            
+            .footer a:hover .github-icon {
+                transform: scale(1.1) rotate(5deg);
+            }
         </style>
     </head>
 
@@ -777,12 +837,23 @@
 
         <div id="problems-container"></div>
 
+        <footer class="footer">
+            <div class="footer-content">
+                <span>Made with 💖 by Maitrek Patel</span>
+                <a href="https://github.com/maitrekpatel1612" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile">
+                    <svg class="github-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                    </svg>
+                </a>
+            </div>
+        </footer>
+
         <script>
             let data = {};
             let solvedCount = { easy: 0, medium: 0, hard: 0 };
             let showPercentage = false;
             let segmentMap = {}; // Maps problem index to segment element
-            let solvedProblems = {}; // Store solved state
+            let solvedProblems = {}; // Store solved state by problem title (unique identifier)
 
             // Load solved state from localStorage
             function loadSolvedState() {
@@ -820,7 +891,7 @@
                 
                 loadSolvedState();
                 
-                // Initialize solved counts from localStorage
+                // Initialize solved counts from localStorage by counting unique titles
                 solvedCount.easy = solvedProblems.easy ? solvedProblems.easy.length : 0;
                 solvedCount.medium = solvedProblems.medium ? solvedProblems.medium.length : 0;
                 solvedCount.hard = solvedProblems.hard ? solvedProblems.hard.length : 0;
@@ -848,10 +919,10 @@
                     const div = document.createElement('div');
                     div.className = 'problem';
                     div.setAttribute('data-level', level);
-                    div.setAttribute('data-index', idx);
+                    div.setAttribute('data-title', q.title); // Store unique identifier
                     
-                    // Check if this problem was previously solved
-                    const isSolved = solvedProblems[level] && solvedProblems[level].includes(idx);
+                    // Check if this problem was previously solved using title as unique identifier
+                    const isSolved = solvedProblems[level] && solvedProblems[level].includes(q.title);
                     if (isSolved) {
                         div.classList.add('solved');
                     }
@@ -867,15 +938,17 @@
                         div.classList.toggle('solved');
                         e.target.classList.toggle('checked');
                         
-                        // Update localStorage
+                        // Update localStorage using title as unique identifier
                         if (!solvedProblems[level]) {
                             solvedProblems[level] = [];
                         }
-                        const solvedIndex = solvedProblems[level].indexOf(idx);
-                        if (solvedIndex > -1) {
-                            solvedProblems[level].splice(solvedIndex, 1);
+                        const titleIndex = solvedProblems[level].indexOf(q.title);
+                        if (titleIndex > -1) {
+                            // Remove from solved list
+                            solvedProblems[level].splice(titleIndex, 1);
                         } else {
-                            solvedProblems[level].push(idx);
+                            // Add to solved list
+                            solvedProblems[level].push(q.title);
                         }
                         saveSolvedState();
                         
