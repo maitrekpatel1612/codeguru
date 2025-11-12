@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Practice Problems Tracker</title>
+        <style>
+            /* 🌑 Polished Dark Theme */
+            :root {
+                --bg: #0d0d0d;
+                --card: #181818;
+                --accent: #00ff84;
+                --accent-muted: #00cc66;
+                --text: #e5e5e5;
+                --subtext: #aaa;
+                --border: #222;
+                --solved: #132d1f;
+                --hover: #1f1f1f;
+                --transition: 0.25s ease;
+            }
+
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: "Inter", system-ui, sans-serif;
+                transition: all var(--transition);
+            }
+
+            body {
+                background: var(--bg);
+                color: var(--text);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 2rem 1rem;
+                min-height: 100vh;
+            }
+
+            h1 {
+                font-size: 2.4rem;
+                color: var(--accent);
+                margin-bottom: 1.8rem;
+                text-align: center;
+                font-weight: 600;
+            }
+
+            /* 🧭 Top Section */
+            .top-panel {
+                width: 100%;
+                max-width: 1100px;
+                display: flex;
+                flex-direction: column;
+                gap: 1.2rem;
+                margin-bottom: 1.5rem;
+            }
+
+            /* Progress Tracker */
+            .progress-card {
+                background: var(--card);
+                border: 1px solid var(--border);
+                padding: 1.2rem;
+                border-radius: 0.8rem;
+                width: 100%;
+            }
+
+            .progress-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                color: var(--text);
+                font-weight: 500;
+                margin-bottom: 0.4rem;
+            }
+
+            .progress-bar {
+                background: #202020;
+                border-radius: 1rem;
+                height: 14px;
+                overflow: hidden;
+                width: 100%;
+            }
+
+            .progress-fill {
+                background: var(--accent);
+                height: 100%;
+                width: 0%;
+                transition: width 0.4s ease;
+            }
+
+            .progress-text {
+                display: flex;
+                justify-content: space-between;
+                margin-top: 0.5rem;
+                font-size: 0.9rem;
+                color: var(--subtext);
+            }
+
+            /* Difficulty Buttons */
+            .level-selector {
+                display: flex;
+                gap: 0.8rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .btn {
+                background: var(--hover);
+                color: var(--text);
+                border: 1px solid var(--border);
+                padding: 0.6rem 1.3rem;
+                border-radius: 0.5rem;
+                font-size: 1rem;
+                cursor: pointer;
+                font-weight: 500;
+            }
+
+            .btn:hover {
+                border-color: var(--accent-muted);
+                color: var(--accent);
+                background: #222;
+            }
+
+            .btn.active {
+                background: var(--accent);
+                color: #000;
+                border-color: var(--accent);
+            }
+
+            /* 🧱 Section */
+            .section {
+                width: 100%;
+                max-width: 1100px;
+                background: var(--card);
+                border-radius: 1rem;
+                border: 1px solid var(--border);
+                padding: 1.2rem;
+                animation: fadeIn 0.4s ease;
+            }
+
+            .section-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                flex-wrap: wrap;
+                margin-bottom: 1rem;
+            }
+
+            .section-header h2 {
+                color: var(--accent);
+                font-weight: 600;
+                font-size: 1.4rem;
+            }
+
+            .small-btn {
+                background: transparent;
+                border: 1px solid var(--accent);
+                color: var(--accent);
+                border-radius: 4px;
+                font-size: 0.85rem;
+                padding: 0.35rem 0.7rem;
+                cursor: pointer;
+            }
+
+            .small-btn:hover {
+                background: var(--accent);
+                color: #000;
+            }
+
+            /* 🎯 Problem Grid */
+            .problem-grid {
+                display: grid;
+                gap: 0.8rem;
+            }
+
+            /* Responsive column control */
+            .easy-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .medium-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            }
+
+            .hard-grid {
+                grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            }
+
+            /* 🎯 Problem Cards */
+            .problem {
+                background: var(--hover);
+                border-radius: 0.6rem;
+                border: 1px solid var(--border);
+                padding: 0.9rem;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+
+            .problem:hover {
+                border-color: var(--accent-muted);
+                background: #222;
+            }
+
+            .problem.solved {
+                background: var(--solved);
+                color: var(--accent);
+                border-color: var(--accent-muted);
+                text-decoration: line-through;
+            }
+
+            .problem a {
+                text-decoration: none;
+                color: inherit;
+                font-weight: 500;
+                margin-bottom: 0.6rem;
+                line-height: 1.4;
+            }
+
+            .problem-footer {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .checkbox {
+                width: 18px;
+                height: 18px;
+                border: 2px solid var(--accent);
+                border-radius: 3px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+            }
+
+            .checkbox.checked {
+                background: var(--accent);
+                color: #000;
+            }
+
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(10px);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <h1>Practice Problems Tracker</h1>
+
+        <div class="top-panel">
+            <div class="progress-card">
+                <div class="progress-header">
+                    <strong>Total Progress</strong>
+                    <span id="total-percent">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div id="total-progress" class="progress-fill"></div>
+                </div>
+                <div class="progress-text">
+                    <span id="total-solved">Solved: 0</span>
+                    <span id="total-revision">Revision: 0</span>
+                </div>
+            </div>
+
+            <div class="level-selector">
+                <button class="btn active" onclick="loadLevel('easy', this)">Easy</button>
+                <button class="btn" onclick="loadLevel('medium', this)">Medium</button>
+                <button class="btn" onclick="loadLevel('hard', this)">Hard</button>
+            </div>
+        </div>
+
+        <div id="problems-container"></div>
+
+        <script>
+            let data = {};
+            let solvedCount = { easy: 0, medium: 0, hard: 0 };
+            let revisionCount = { easy: 0, medium: 0, hard: 0 };
+
+            async function loadQuestions() {
+                const response = await fetch("questions.json");
+                data = await response.json();
+                loadLevel('easy', document.querySelector('.btn.active'));
+            }
+
+            function loadLevel(level, btn) {
+                document.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const container = document.getElementById('problems-container');
+                container.innerHTML = '';
+
+                const section = document.createElement('div');
+                section.className = 'section';
+                section.innerHTML = `
+        <div class="section-header">
+          <h2>${capitalize(level)}</h2>
+          <div>
+            <button class="small-btn" onclick="randomize('${level}')">Shuffle</button>
+            <button class="small-btn" onclick="resetProgress('${level}')">Reset</button>
+          </div>
+        </div>
+
+        <div class="progress-header">
+          <span>Progress</span>
+          <span id="${level}-percent">0%</span>
+        </div>
+        <div class="progress-bar"><div id="${level}-progress" class="progress-fill"></div></div>
+        <div class="progress-text">
+          <span id="${level}-solved">Solved: 0/${data[level].length}</span>
+          <span id="${level}-revision">Revision: 0</span>
+        </div>
+
+        <div id="${level}-list" class="problem-grid ${level}-grid"></div>
+      `;
+                container.appendChild(section);
+
+                const list = document.getElementById(`${level}-list`);
+                data[level].forEach(q => {
+                    const div = document.createElement('div');
+                    div.className = 'problem';
+                    div.innerHTML = `
+          <a href="${q.link}" target="_blank">${q.title}</a>
+          <div class="problem-footer">
+            <div class="checkbox"></div>
+            <button class="small-btn" onclick="markRevision(event, '${level}')">Revise</button>
+          </div>
+        `;
+                    div.querySelector('.checkbox').addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        div.classList.toggle('solved');
+                        e.target.classList.toggle('checked');
+                        updateProgress(level);
+                    });
+                    list.appendChild(div);
+                });
+            }
+
+            function randomize(level) {
+                const list = document.getElementById(`${level}-list`);
+                const problems = Array.from(list.children);
+                problems.sort(() => Math.random() - 0.5);
+                list.innerHTML = "";
+                problems.forEach(p => list.appendChild(p));
+            }
+
+            function markRevision(e, level) {
+                e.stopPropagation();
+                revisionCount[level]++;
+                document.getElementById(`${level}-revision`).textContent = `Revision: ${revisionCount[level]}`;
+                updateTotal();
+            }
+
+            function updateProgress(level) {
+                const list = document.getElementById(`${level}-list`);
+                const solved = list.querySelectorAll('.solved').length;
+                solvedCount[level] = solved;
+                const total = data[level].length;
+                const percent = Math.round((solved / total) * 100);
+                document.getElementById(`${level}-progress`).style.width = `${percent}%`;
+                document.getElementById(`${level}-solved`).textContent = `Solved: ${solved}/${total}`;
+                document.getElementById(`${level}-percent`).textContent = `${percent}%`;
+                updateTotal();
+            }
+
+            function updateTotal() {
+                const totalSolved = solvedCount.easy + solvedCount.medium + solvedCount.hard;
+                const totalRevision = revisionCount.easy + revisionCount.medium + revisionCount.hard;
+                const totalProblems = data.easy.length + data.medium.length + data.hard.length;
+                const percent = Math.round((totalSolved / totalProblems) * 100);
+                document.getElementById('total-progress').style.width = `${percent}%`;
+                document.getElementById('total-percent').textContent = `${percent}%`;
+                document.getElementById('total-solved').textContent = `Solved: ${totalSolved}/${totalProblems}`;
+                document.getElementById('total-revision').textContent = `Revision: ${totalRevision}`;
+            }
+
+            function resetProgress(level) {
+                solvedCount[level] = 0;
+                revisionCount[level] = 0;
+                loadLevel(level, document.querySelector(`.btn.active`));
+                updateTotal();
+            }
+
+            function capitalize(str) {
+                return str.charAt(0).toUpperCase() + str.slice(1);
+            }
+
+            loadQuestions();
+        </script>
+    </body>
+
+</html>
