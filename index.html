@@ -57,8 +57,8 @@
                 --text: #f0f0f0;
                 --subtext: #999;
                 --border: #282828;
-                --solved: #0d2418;
-                --solved-border: #1a4d2e;
+                --solved: #0f3d26;
+                --solved-border: #00ff84;
                 --hover: #1a1a1a;
                 --transition: 0.25s ease;
                 --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
@@ -551,9 +551,9 @@
             }
             
             .problem.solved:hover {
-                background: var(--solved);
-                border-color: var(--accent-muted);
-                box-shadow: 0 2px 8px rgba(0, 255, 132, 0.25);
+                background: #11503a;
+                border-color: var(--accent);
+                box-shadow: 0 0 0 1px var(--accent) inset, 0 2px 8px rgba(0, 255, 132, 0.15);
             }
 
             .problem a {
@@ -727,13 +727,23 @@
                 localStorage.setItem('solvedProblems', JSON.stringify(solvedProblems));
             }
 
+            // Fisher-Yates shuffle algorithm
+            function shuffleArray(array) {
+                const shuffled = [...array];
+                for (let i = shuffled.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+                }
+                return shuffled;
+            }
+
             async function loadQuestions() {
                 const response = await fetch("questions.json");
                 data = await response.json();
                 
-                // Sort each difficulty level by title
+                // Randomize each difficulty level on every page load
                 Object.keys(data).forEach(level => {
-                    data[level].sort((a, b) => a.title.localeCompare(b.title));
+                    data[level] = shuffleArray(data[level]);
                 });
                 
                 loadSolvedState();
