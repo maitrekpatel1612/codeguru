@@ -4,20 +4,62 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Practice Problems Tracker</title>
+        
+        <!-- Primary Meta Tags -->
+        <title>CodeGuru - LeetCode Practice Tracker | Track Your Coding Progress</title>
+        <meta name="title" content="CodeGuru - Practice Problem Tracker" />
+        <meta name="description" content="Track your LeetCode coding practice with CodeGuru's beautiful visual progress tracker. Monitor 794 problems across Easy, Medium, and Hard difficulties. Your progress saved locally!" />
+        <meta name="keywords" content="codeguru, leetcode tracker, coding practice, dsa tracker, algorithm practice, programming problems, interview preparation, coding progress tracker, maitrek patel" />
+        <meta name="author" content="Maitrek Patel" />
+        <meta name="robots" content="index, follow" />
+        
+        <!-- Open Graph / Facebook / LinkedIn -->
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://codeguru.maitrekpatel.tech/" />
+        <meta property="og:title" content="CodeGuru - Practice Problem Tracker" />
+        <meta property="og:description" content="Track your LeetCode coding practice with CodeGuru's beautiful visual progress tracker. Monitor 794 problems across Easy, Medium, and Hard difficulties. Your progress saved locally!" />
+        <meta property="og:image" content="preview.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        
+        <!-- Twitter -->
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://codeguru.maitrekpatel.tech/" />
+        <meta property="twitter:title" content="CodeGuru - Practice Problem Tracker" />
+        <meta property="twitter:description" content="Track your LeetCode coding practice with CodeGuru's beautiful visual progress tracker. Monitor 794 problems across Easy, Medium, and Hard difficulties. Your progress saved locally!" />
+        <meta property="twitter:image" content="preview.png" />
+        
+        <!-- WhatsApp / Telegram -->
+        <meta property="og:site_name" content="CodeGuru" />
+        <meta property="og:locale" content="en_US" />
+        
+        <!-- Favicon -->
+        <link rel="icon" type="image/png" sizes="32x32" href="image.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="image.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="image.png" />
+        <link rel="shortcut icon" href="image.png" />
+        
+        <!-- Theme Color -->
+        <meta name="theme-color" content="#00ff84" />
+        <meta name="msapplication-TileColor" content="#00ff84" />
+        
         <style>
             /* 🌑 Polished Dark Theme */
             :root {
-                --bg: #0d0d0d;
-                --card: #181818;
+                --bg: #0a0a0a;
+                --card: #141414;
+                --card-hover: #1a1a1a;
                 --accent: #00ff84;
                 --accent-muted: #00cc66;
-                --text: #e5e5e5;
-                --subtext: #aaa;
-                --border: #222;
-                --solved: #132d1f;
-                --hover: #1f1f1f;
+                --accent-dark: #00994d;
+                --text: #f0f0f0;
+                --subtext: #999;
+                --border: #282828;
+                --solved: #0d2418;
+                --solved-border: #1a4d2e;
+                --hover: #1a1a1a;
                 --transition: 0.25s ease;
+                --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
             }
 
             * {
@@ -36,20 +78,25 @@
                 align-items: center;
                 padding: 2rem 1rem;
                 min-height: 100vh;
+                background-image: 
+                    radial-gradient(circle at 20% 50%, rgba(0, 255, 132, 0.03) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 80%, rgba(0, 255, 132, 0.03) 0%, transparent 50%);
             }
 
             h1 {
-                font-size: 2.4rem;
+                font-size: 2.6rem;
                 color: var(--accent);
-                margin-bottom: 1.8rem;
+                margin-bottom: 2rem;
                 text-align: center;
-                font-weight: 600;
+                font-weight: 700;
+                text-shadow: 0 0 30px rgba(0, 255, 132, 0.3);
+                letter-spacing: -0.5px;
             }
 
             /* 🧭 Top Section */
             .top-panel {
                 width: 100%;
-                max-width: 1100px;
+                max-width: 1400px;
                 display: flex;
                 flex-direction: column;
                 gap: 1.2rem;
@@ -60,184 +107,401 @@
             .progress-card {
                 background: var(--card);
                 border: 1px solid var(--border);
-                padding: 1.2rem;
-                border-radius: 0.8rem;
+                padding: 2.5rem 2rem;
+                border-radius: 1.2rem;
                 width: 100%;
+                box-shadow: var(--shadow);
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 2rem;
+                flex-wrap: wrap;
             }
 
-            .progress-header {
+            .circular-progress-container {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+            }
+
+            .circular-progress {
+                width: 200px;
+                height: 200px;
+                position: relative;
+                cursor: pointer;
+                transition: transform 0.2s ease;
+            }
+            
+            .circular-progress:hover {
+                transform: scale(1.05);
+            }
+            
+            .circular-progress:active {
+                transform: scale(0.98);
+            }
+
+            .circular-progress svg {
+                transform: rotate(-90deg);
+                width: 100%;
+                height: 100%;
+            }
+
+            .circular-progress-bg {
+                fill: none;
+                stroke: #0d0d0d;
+                stroke-width: 12;
+            }
+
+            .progress-segment {
+                fill: none;
+                stroke-width: 12;
+                transition: opacity 0.3s ease;
+                opacity: 0.15;
+            }
+            
+            .progress-segment.solved {
+                opacity: 1;
+            }
+            
+            .progress-segment.easy {
+                stroke: #00d9ff;
+            }
+            
+            .progress-segment.medium {
+                stroke: #ffa500;
+            }
+            
+            .progress-segment.hard {
+                stroke: #ff4757;
+            }
+
+            .progress-center {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                text-align: center;
+            }
+
+            .progress-number {
+                font-size: 3.5rem;
+                font-weight: 900;
+                color: var(--text);
+                line-height: 1;
+            }
+
+            .progress-total {
+                font-size: 1.4rem;
+                color: #666;
+                font-weight: 700;
+            }
+
+            .progress-label {
+                font-size: 1rem;
+                color: #666;
+                margin-top: 0.6rem;
+                font-weight: 600;
+            }
+
+            .stats-grid {
+                display: grid;
+                gap: 1rem;
+                flex: 1;
+                min-width: 280px;
+            }
+
+            .stat-item {
+                background: var(--hover);
+                padding: 1.2rem 1.5rem;
+                border-radius: 0.8rem;
+                border: 1px solid var(--border);
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                color: var(--text);
-                font-weight: 500;
-                margin-bottom: 0.4rem;
+                transition: all 0.3s ease;
             }
 
-            .progress-bar {
-                background: #202020;
-                border-radius: 1rem;
-                height: 14px;
-                overflow: hidden;
-                width: 100%;
+            .stat-item:hover {
+                border-color: var(--accent-muted);
+                transform: translateX(4px);
+                box-shadow: 0 2px 8px rgba(0, 255, 132, 0.15);
             }
 
-            .progress-fill {
-                background: var(--accent);
-                height: 100%;
-                width: 0%;
-                transition: width 0.4s ease;
-            }
-
-            .progress-text {
+            .stat-label {
+                font-size: 1.2rem;
+                font-weight: 800;
                 display: flex;
-                justify-content: space-between;
-                margin-top: 0.5rem;
-                font-size: 0.9rem;
-                color: var(--subtext);
+                align-items: center;
+                gap: 0.5rem;
+                letter-spacing: 0.3px;
+            }
+
+            .stat-label.easy {
+                color: #00d9ff;
+            }
+
+            .stat-label.medium {
+                color: #ffa500;
+            }
+
+            .stat-label.hard {
+                color: #ff4757;
+            }
+
+            .stat-value {
+                font-size: 1.4rem;
+                font-weight: 800;
+                color: var(--text);
+                letter-spacing: 0.5px;
+            }
+
+            @media (max-width: 767px) {
+                .progress-card {
+                    flex-direction: column;
+                    padding: 2rem 1.5rem;
+                }
+                
+                .circular-progress {
+                    width: 180px;
+                    height: 180px;
+                }
+                
+                .progress-number {
+                    font-size: 2.5rem;
+                }
+                
+                .stats-grid {
+                    width: 100%;
+                }
             }
 
             /* Difficulty Buttons */
             .level-selector {
-                display: flex;
-                gap: 0.8rem;
-                flex-wrap: wrap;
-                justify-content: center;
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1rem;
+                width: 100%;
             }
 
             .btn {
                 background: var(--hover);
                 color: var(--text);
                 border: 1px solid var(--border);
-                padding: 0.6rem 1.3rem;
-                border-radius: 0.5rem;
-                font-size: 1rem;
+                padding: 0.9rem 1.5rem;
+                border-radius: 0.6rem;
+                font-size: 1.1rem;
                 cursor: pointer;
-                font-weight: 500;
+                font-weight: 600;
+                transition: all 0.3s ease;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                position: relative;
             }
 
             .btn:hover {
-                border-color: var(--accent-muted);
+                border-color: var(--accent);
                 color: var(--accent);
-                background: #222;
+                background: #1f1f1f;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(0, 255, 132, 0.2);
             }
 
             .btn.active {
                 background: var(--accent);
                 color: #000;
                 border-color: var(--accent);
+                box-shadow: 0 4px 16px rgba(0, 255, 132, 0.4);
+                transform: translateY(-2px);
+            }
+            
+            @media (max-width: 767px) {
+                .level-selector {
+                    grid-template-columns: 1fr;
+                }
             }
 
             /* 🧱 Section */
             .section {
                 width: 100%;
-                max-width: 1100px;
+                max-width: 1400px;
                 background: var(--card);
                 border-radius: 1rem;
                 border: 1px solid var(--border);
-                padding: 1.2rem;
-                animation: fadeIn 0.4s ease;
-            }
-
-            .section-header {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                flex-wrap: wrap;
-                margin-bottom: 1rem;
-            }
-
-            .section-header h2 {
-                color: var(--accent);
-                font-weight: 600;
-                font-size: 1.4rem;
+                padding: 1.8rem;
+                animation: fadeIn 0.5s ease;
+                box-shadow: var(--shadow);
             }
 
             .small-btn {
                 background: transparent;
-                border: 1px solid var(--accent);
+                border: 2px solid var(--accent);
                 color: var(--accent);
-                border-radius: 4px;
-                font-size: 0.85rem;
-                padding: 0.35rem 0.7rem;
+                border-radius: 0.6rem;
+                font-size: 0.9rem;
+                padding: 0.6rem 1.4rem;
                 cursor: pointer;
+                font-weight: 600;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                position: relative;
+                overflow: hidden;
             }
-
-            .small-btn:hover {
+            
+            .small-btn::before {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 0;
+                height: 0;
+                border-radius: 50%;
                 background: var(--accent);
+                transform: translate(-50%, -50%);
+                transition: width 0.4s, height 0.4s;
+            }
+            
+            .small-btn:hover::before {
+                width: 300px;
+                height: 300px;
+            }
+            
+            .small-btn:hover {
                 color: #000;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(0, 255, 132, 0.4);
+            }
+            
+            .small-btn span {
+                position: relative;
+                z-index: 1;
             }
 
             /* 🎯 Problem Grid */
             .problem-grid {
                 display: grid;
                 gap: 0.8rem;
+                width: 100%;
             }
 
-            /* Responsive column control */
-            .easy-grid {
-                grid-template-columns: 1fr;
+            /* Responsive grid - max 3 columns on large screens, 2 on medium, 1 on small */
+            @media (min-width: 1200px) {
+                .problem-grid {
+                    grid-template-columns: repeat(3, 1fr);
+                }
             }
 
-            .medium-grid {
-                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            @media (min-width: 768px) and (max-width: 1199px) {
+                .problem-grid {
+                    grid-template-columns: repeat(2, 1fr);
+                }
             }
 
-            .hard-grid {
-                grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            @media (max-width: 767px) {
+                .problem-grid {
+                    grid-template-columns: 1fr;
+                }
             }
 
             /* 🎯 Problem Cards */
             .problem {
                 background: var(--hover);
-                border-radius: 0.6rem;
+                border-radius: 0.7rem;
                 border: 1px solid var(--border);
-                padding: 0.9rem;
+                padding: 1.1rem 1.2rem;
                 display: flex;
-                flex-direction: column;
-                justify-content: space-between;
+                flex-direction: row;
+                align-items: center;
+                gap: 1rem;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                cursor: pointer;
             }
 
             .problem:hover {
                 border-color: var(--accent-muted);
-                background: #222;
+                background: var(--card-hover);
+                transform: translateX(4px);
+                box-shadow: 0 2px 8px rgba(0, 255, 132, 0.15);
             }
 
             .problem.solved {
                 background: var(--solved);
                 color: var(--accent);
+                border-color: var(--solved-border);
+                box-shadow: 0 0 0 1px var(--solved-border) inset;
+            }
+            
+            .problem.solved:hover {
+                background: var(--solved);
                 border-color: var(--accent-muted);
-                text-decoration: line-through;
+                box-shadow: 0 2px 8px rgba(0, 255, 132, 0.25);
             }
 
             .problem a {
                 text-decoration: none;
                 color: inherit;
                 font-weight: 500;
-                margin-bottom: 0.6rem;
-                line-height: 1.4;
+                line-height: 1.5;
+                flex: 1;
+                transition: color 0.2s ease;
+            }
+            
+            .problem:hover a {
+                color: var(--accent);
+            }
+            
+            .problem.solved a {
+                color: var(--accent);
             }
 
             .problem-footer {
                 display: flex;
-                justify-content: space-between;
                 align-items: center;
+                flex-shrink: 0;
             }
 
             .checkbox {
-                width: 18px;
-                height: 18px;
+                width: 22px;
+                height: 22px;
                 border: 2px solid var(--accent);
-                border-radius: 3px;
+                border-radius: 6px;
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 cursor: pointer;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                flex-shrink: 0;
+                position: relative;
+            }
+            
+            .checkbox:hover {
+                border-color: var(--accent);
+                background: rgba(0, 255, 132, 0.15);
+                transform: scale(1.1);
             }
 
             .checkbox.checked {
                 background: var(--accent);
                 color: #000;
+                border-color: var(--accent);
+                animation: checkBounce 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            }
+            
+            .checkbox.checked::after {
+                content: "✓";
+                font-size: 15px;
+                font-weight: bold;
+            }
+            
+            @keyframes checkBounce {
+                0% {
+                    transform: scale(0);
+                }
+                50% {
+                    transform: scale(1.2);
+                }
+                100% {
+                    transform: scale(1);
+                }
             }
 
             @keyframes fadeIn {
@@ -255,20 +519,36 @@
     </head>
 
     <body>
-        <h1>Practice Problems Tracker</h1>
+        <h1>CodeGuru - Practice Problems Tracker</h1>
 
         <div class="top-panel">
             <div class="progress-card">
-                <div class="progress-header">
-                    <strong>Total Progress</strong>
-                    <span id="total-percent">0%</span>
+                <div class="circular-progress-container">
+                    <div class="circular-progress" onclick="togglePercentage()">
+                        <svg viewBox="0 0 200 200" id="progress-svg">
+                            <circle class="circular-progress-bg" cx="100" cy="100" r="90"></circle>
+                            <g id="progress-segments"></g>
+                        </svg>
+                        <div class="progress-center">
+                            <div class="progress-number" id="total-solved-number">0</div>
+                            <div class="progress-total" id="total-problems">/ 794</div>
+                            <div class="progress-label">Solved</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="progress-bar">
-                    <div id="total-progress" class="progress-fill"></div>
-                </div>
-                <div class="progress-text">
-                    <span id="total-solved">Solved: 0</span>
-                    <span id="total-revision">Revision: 0</span>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-label easy">Easy</span>
+                        <span class="stat-value" id="easy-stat">0/104</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label medium">Med.</span>
+                        <span class="stat-value" id="medium-stat">0/500</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label hard">Hard</span>
+                        <span class="stat-value" id="hard-stat">0/190</span>
+                    </div>
                 </div>
             </div>
 
@@ -284,12 +564,83 @@
         <script>
             let data = {};
             let solvedCount = { easy: 0, medium: 0, hard: 0 };
-            let revisionCount = { easy: 0, medium: 0, hard: 0 };
+            let showPercentage = false;
+            let segmentMap = {}; // Maps problem index to segment element
+            let solvedProblems = {}; // Store solved state
+
+            // Load solved state from localStorage
+            function loadSolvedState() {
+                const saved = localStorage.getItem('solvedProblems');
+                if (saved) {
+                    solvedProblems = JSON.parse(saved);
+                } else {
+                    solvedProblems = { easy: [], medium: [], hard: [] };
+                }
+            }
+
+            // Save solved state to localStorage
+            function saveSolvedState() {
+                localStorage.setItem('solvedProblems', JSON.stringify(solvedProblems));
+            }
 
             async function loadQuestions() {
                 const response = await fetch("questions.json");
                 data = await response.json();
+                
+                // Sort each difficulty level by title
+                Object.keys(data).forEach(level => {
+                    data[level].sort((a, b) => a.title.localeCompare(b.title));
+                });
+                
+                loadSolvedState();
+                
+                // Initialize solved counts from localStorage
+                solvedCount.easy = solvedProblems.easy ? solvedProblems.easy.length : 0;
+                solvedCount.medium = solvedProblems.medium ? solvedProblems.medium.length : 0;
+                solvedCount.hard = solvedProblems.hard ? solvedProblems.hard.length : 0;
+                
+                createProgressSegments();
+                updateTotal(); // Update totals before loading any level
                 loadLevel('easy', document.querySelector('.btn.active'));
+            }
+            
+            function createProgressSegments() {
+                const svg = document.getElementById('progress-segments');
+                const radius = 90;
+                const circumference = 2 * Math.PI * radius;
+                const totalProblems = data.easy.length + data.medium.length + data.hard.length;
+                const segmentLength = circumference / totalProblems;
+                const gapLength = segmentLength * 0.05; // 5% gap
+                const dashLength = segmentLength - gapLength;
+                
+                let currentOffset = 0;
+                let problemIndex = 0;
+                
+                // Create segments for each difficulty level
+                ['easy', 'medium', 'hard'].forEach(level => {
+                    data[level].forEach((problem, idx) => {
+                        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                        circle.setAttribute('class', `progress-segment ${level}`);
+                        circle.setAttribute('cx', '100');
+                        circle.setAttribute('cy', '100');
+                        circle.setAttribute('r', radius);
+                        circle.setAttribute('stroke-dasharray', `${dashLength} ${circumference - dashLength}`);
+                        circle.setAttribute('stroke-dashoffset', currentOffset);
+                        
+                        // Check if this problem was previously solved
+                        if (solvedProblems[level] && solvedProblems[level].includes(idx)) {
+                            circle.classList.add('solved');
+                        }
+                        
+                        svg.appendChild(circle);
+                        
+                        // Store reference with problem identifier
+                        segmentMap[`${level}-${idx}`] = circle;
+                        
+                        currentOffset -= segmentLength;
+                        problemIndex++;
+                    });
+                });
             }
 
             function loadLevel(level, btn) {
@@ -302,91 +653,99 @@
                 const section = document.createElement('div');
                 section.className = 'section';
                 section.innerHTML = `
-        <div class="section-header">
-          <h2>${capitalize(level)}</h2>
-          <div>
-            <button class="small-btn" onclick="randomize('${level}')">Shuffle</button>
-            <button class="small-btn" onclick="resetProgress('${level}')">Reset</button>
-          </div>
-        </div>
-
-        <div class="progress-header">
-          <span>Progress</span>
-          <span id="${level}-percent">0%</span>
-        </div>
-        <div class="progress-bar"><div id="${level}-progress" class="progress-fill"></div></div>
-        <div class="progress-text">
-          <span id="${level}-solved">Solved: 0/${data[level].length}</span>
-          <span id="${level}-revision">Revision: 0</span>
-        </div>
-
-        <div id="${level}-list" class="problem-grid ${level}-grid"></div>
+        <div id="${level}-list" class="problem-grid"></div>
       `;
                 container.appendChild(section);
 
                 const list = document.getElementById(`${level}-list`);
-                data[level].forEach(q => {
+                data[level].forEach((q, idx) => {
                     const div = document.createElement('div');
                     div.className = 'problem';
+                    div.setAttribute('data-level', level);
+                    div.setAttribute('data-index', idx);
+                    
+                    // Check if this problem was previously solved
+                    const isSolved = solvedProblems[level] && solvedProblems[level].includes(idx);
+                    if (isSolved) {
+                        div.classList.add('solved');
+                    }
+                    
                     div.innerHTML = `
-          <a href="${q.link}" target="_blank">${q.title}</a>
           <div class="problem-footer">
-            <div class="checkbox"></div>
-            <button class="small-btn" onclick="markRevision(event, '${level}')">Revise</button>
+            <div class="checkbox ${isSolved ? 'checked' : ''}"></div>
           </div>
+          <a href="${q.link}" target="_blank">${q.title}</a>
         `;
                     div.querySelector('.checkbox').addEventListener('click', (e) => {
                         e.stopPropagation();
                         div.classList.toggle('solved');
                         e.target.classList.toggle('checked');
+                        
+                        // Update segment
+                        const segmentKey = `${level}-${idx}`;
+                        const segment = segmentMap[segmentKey];
+                        if (segment) {
+                            segment.classList.toggle('solved');
+                        }
+                        
+                        // Update localStorage
+                        if (!solvedProblems[level]) {
+                            solvedProblems[level] = [];
+                        }
+                        const solvedIndex = solvedProblems[level].indexOf(idx);
+                        if (solvedIndex > -1) {
+                            solvedProblems[level].splice(solvedIndex, 1);
+                        } else {
+                            solvedProblems[level].push(idx);
+                        }
+                        saveSolvedState();
+                        
                         updateProgress(level);
                     });
                     list.appendChild(div);
                 });
             }
 
-            function randomize(level) {
-                const list = document.getElementById(`${level}-list`);
-                const problems = Array.from(list.children);
-                problems.sort(() => Math.random() - 0.5);
-                list.innerHTML = "";
-                problems.forEach(p => list.appendChild(p));
-            }
-
-            function markRevision(e, level) {
-                e.stopPropagation();
-                revisionCount[level]++;
-                document.getElementById(`${level}-revision`).textContent = `Revision: ${revisionCount[level]}`;
-                updateTotal();
-            }
-
             function updateProgress(level) {
                 const list = document.getElementById(`${level}-list`);
-                const solved = list.querySelectorAll('.solved').length;
-                solvedCount[level] = solved;
-                const total = data[level].length;
-                const percent = Math.round((solved / total) * 100);
-                document.getElementById(`${level}-progress`).style.width = `${percent}%`;
-                document.getElementById(`${level}-solved`).textContent = `Solved: ${solved}/${total}`;
-                document.getElementById(`${level}-percent`).textContent = `${percent}%`;
+                if (list) {
+                    const solved = list.querySelectorAll('.solved').length;
+                    solvedCount[level] = solved;
+                }
                 updateTotal();
             }
 
             function updateTotal() {
                 const totalSolved = solvedCount.easy + solvedCount.medium + solvedCount.hard;
-                const totalRevision = revisionCount.easy + revisionCount.medium + revisionCount.hard;
                 const totalProblems = data.easy.length + data.medium.length + data.hard.length;
                 const percent = Math.round((totalSolved / totalProblems) * 100);
-                document.getElementById('total-progress').style.width = `${percent}%`;
-                document.getElementById('total-percent').textContent = `${percent}%`;
-                document.getElementById('total-solved').textContent = `Solved: ${totalSolved}/${totalProblems}`;
-                document.getElementById('total-revision').textContent = `Revision: ${totalRevision}`;
+                
+                // Update display based on toggle
+                if (showPercentage) {
+                    // Show percentages
+                    document.getElementById('total-solved-number').textContent = percent;
+                    document.getElementById('total-problems').textContent = '%';
+                    
+                    const easyPercent = Math.round((solvedCount.easy / data.easy.length) * 100);
+                    const mediumPercent = Math.round((solvedCount.medium / data.medium.length) * 100);
+                    const hardPercent = Math.round((solvedCount.hard / data.hard.length) * 100);
+                    
+                    document.getElementById('easy-stat').textContent = `${easyPercent}%`;
+                    document.getElementById('medium-stat').textContent = `${mediumPercent}%`;
+                    document.getElementById('hard-stat').textContent = `${hardPercent}%`;
+                } else {
+                    // Show counts
+                    document.getElementById('total-solved-number').textContent = totalSolved;
+                    document.getElementById('total-problems').textContent = `/ ${totalProblems}`;
+                    
+                    document.getElementById('easy-stat').textContent = `${solvedCount.easy}/${data.easy.length}`;
+                    document.getElementById('medium-stat').textContent = `${solvedCount.medium}/${data.medium.length}`;
+                    document.getElementById('hard-stat').textContent = `${solvedCount.hard}/${data.hard.length}`;
+                }
             }
-
-            function resetProgress(level) {
-                solvedCount[level] = 0;
-                revisionCount[level] = 0;
-                loadLevel(level, document.querySelector(`.btn.active`));
+            
+            function togglePercentage() {
+                showPercentage = !showPercentage;
                 updateTotal();
             }
 
