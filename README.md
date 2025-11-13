@@ -13,6 +13,9 @@ with an interactive circular progress ring, difficulty-based color segments, and
 - 📱 Fully responsive design for all devices
 - 🎲 Smart problem randomization on each load
 - 🔗 Direct links to 794 LeetCode problems (104 Easy, 500 Medium, 190 Hard)
+- 🔍 Global search functionality with real-time filtering and text highlighting
+- 🎯 Filter problems by status (All, Solved, Unsolved) for each difficulty level
+- 📈 Toggle between count and percentage view by clicking the progress ring
 
 ## Author
 

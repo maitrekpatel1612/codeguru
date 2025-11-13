@@ -538,12 +538,16 @@
                 font-weight: 600;
                 transition: all 0.3s ease;
                 text-transform: capitalize;
+                min-width: 100px;
+                flex: 0 0 100px;
             }
             
             @media (max-width: 767px) {
                 .filter-btn {
-                    padding: 0.5rem 1rem;
+                    padding: 0.5rem 0.75rem;
                     font-size: 0.8rem;
+                    min-width: 85px;
+                    flex: 0 0 85px;
                 }
             }
 
@@ -558,6 +562,150 @@
                 background: var(--accent);
                 color: #000;
                 border-color: var(--accent);
+            }
+
+            /* Search Bar Styles */
+            .search-container {
+                width: 100%;
+                max-width: 1400px;
+                margin-bottom: 1.5rem;
+                position: relative;
+            }
+            
+            @media (max-width: 767px) {
+                .search-container {
+                    margin-bottom: 1rem;
+                }
+            }
+
+            .search-wrapper {
+                position: relative;
+                display: flex;
+                align-items: center;
+            }
+
+            .search-input {
+                width: 100%;
+                background: var(--card);
+                border: 1px solid var(--border);
+                color: var(--text);
+                padding: 1rem 3.5rem 1rem 3rem;
+                border-radius: 0.8rem;
+                font-size: 1rem;
+                font-weight: 500;
+                transition: all 0.3s ease;
+                outline: none;
+            }
+            
+            @media (max-width: 767px) {
+                .search-input {
+                    padding: 0.85rem 3rem 0.85rem 2.75rem;
+                    font-size: 0.9rem;
+                }
+            }
+
+            .search-input:focus {
+                border-color: var(--accent);
+                background: var(--card-hover);
+                box-shadow: 0 0 0 3px rgba(0, 255, 132, 0.1);
+            }
+
+            .search-input::placeholder {
+                color: var(--subtext);
+            }
+
+            .search-icon {
+                position: absolute;
+                left: 1rem;
+                color: var(--subtext);
+                pointer-events: none;
+                font-size: 1.2rem;
+            }
+            
+            @media (max-width: 767px) {
+                .search-icon {
+                    left: 0.85rem;
+                    font-size: 1rem;
+                }
+            }
+
+            .clear-search {
+                position: absolute;
+                right: 1rem;
+                background: transparent;
+                border: none;
+                color: var(--subtext);
+                cursor: pointer;
+                font-size: 1.5rem;
+                padding: 0.25rem;
+                display: none;
+                transition: all 0.3s ease;
+                line-height: 1;
+            }
+            
+            @media (max-width: 767px) {
+                .clear-search {
+                    right: 0.85rem;
+                    font-size: 1.3rem;
+                }
+            }
+
+            .clear-search:hover {
+                color: var(--accent);
+                transform: scale(1.1);
+            }
+
+            .clear-search.visible {
+                display: block;
+            }
+
+            .search-results-count {
+                margin-top: 0.75rem;
+                color: var(--subtext);
+                font-size: 0.9rem;
+                text-align: center;
+                font-weight: 500;
+            }
+            
+            @media (max-width: 767px) {
+                .search-results-count {
+                    font-size: 0.8rem;
+                    margin-top: 0.5rem;
+                }
+            }
+
+            .no-results {
+                text-align: center;
+                padding: 3rem 1rem;
+                color: var(--subtext);
+                font-size: 1.1rem;
+            }
+            
+            @media (max-width: 767px) {
+                .no-results {
+                    padding: 2rem 1rem;
+                    font-size: 0.95rem;
+                }
+            }
+
+            .no-results-icon {
+                font-size: 3rem;
+                margin-bottom: 1rem;
+                opacity: 0.5;
+            }
+            
+            @media (max-width: 767px) {
+                .no-results-icon {
+                    font-size: 2.5rem;
+                }
+            }
+
+            .highlight {
+                background: rgba(0, 255, 132, 0.3);
+                color: var(--accent);
+                font-weight: 700;
+                padding: 0.1rem 0.2rem;
+                border-radius: 0.2rem;
             }
 
             .small-btn {
@@ -884,6 +1032,21 @@
             </div>
         </div>
 
+        <div class="search-container">
+            <div class="search-wrapper">
+                <span class="search-icon">🔍</span>
+                <input 
+                    type="text" 
+                    id="search-input" 
+                    class="search-input" 
+                    placeholder="Search problems by title..."
+                    oninput="searchProblems(this.value)"
+                />
+                <button class="clear-search" id="clear-search" onclick="clearSearch()">✕</button>
+            </div>
+            <div id="search-results-count" class="search-results-count"></div>
+        </div>
+
         <div id="problems-container"></div>
 
         <footer class="footer">
@@ -1139,6 +1302,79 @@
 
             function capitalize(str) {
                 return str.charAt(0).toUpperCase() + str.slice(1);
+            }
+
+            // Search functionality
+            function searchProblems(query) {
+                const searchInput = document.getElementById('search-input');
+                const clearBtn = document.getElementById('clear-search');
+                const resultsCount = document.getElementById('search-results-count');
+                
+                // Show/hide clear button
+                if (query.length > 0) {
+                    clearBtn.classList.add('visible');
+                } else {
+                    clearBtn.classList.remove('visible');
+                }
+                
+                // If search is empty, show all problems
+                if (!query.trim()) {
+                    resultsCount.textContent = '';
+                    const allProblems = document.querySelectorAll('.problem');
+                    allProblems.forEach(problem => {
+                        problem.style.display = '';
+                        // Remove highlights
+                        const link = problem.querySelector('a');
+                        if (link) {
+                            link.innerHTML = link.textContent;
+                        }
+                    });
+                    return;
+                }
+                
+                const searchTerm = query.toLowerCase();
+                let visibleCount = 0;
+                let totalCount = 0;
+                
+                // Search across all loaded problems
+                const allProblems = document.querySelectorAll('.problem');
+                allProblems.forEach(problem => {
+                    totalCount++;
+                    const link = problem.querySelector('a');
+                    const title = link.textContent.toLowerCase();
+                    
+                    if (title.includes(searchTerm)) {
+                        problem.style.display = '';
+                        visibleCount++;
+                        
+                        // Highlight matching text
+                        const originalText = link.textContent;
+                        const regex = new RegExp(`(${query})`, 'gi');
+                        link.innerHTML = originalText.replace(regex, '<span class="highlight">$1</span>');
+                    } else {
+                        problem.style.display = 'none';
+                        // Remove highlights from hidden items
+                        link.innerHTML = link.textContent;
+                    }
+                });
+                
+                // Show results count
+                if (visibleCount === 0) {
+                    resultsCount.innerHTML = `
+                        <div class="no-results">
+                            <div class="no-results-icon">🔍</div>
+                            <div>No problems found matching "${query}"</div>
+                        </div>
+                    `;
+                } else {
+                    resultsCount.textContent = `Found ${visibleCount} problem${visibleCount !== 1 ? 's' : ''} matching "${query}"`;
+                }
+            }
+
+            function clearSearch() {
+                const searchInput = document.getElementById('search-input');
+                searchInput.value = '';
+                searchProblems('');
             }
 
             loadQuestions();
