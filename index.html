@@ -6,10 +6,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         
         <!-- Primary Meta Tags -->
-        <title>CodeGuru - LeetCode Practice Tracker | 794 DSA Problems | Free Interview Prep Tool</title>
+        <title>CodeGuru - LeetCode Practice Tracker | 629 DSA Problems | Free Interview Prep Tool</title>
         <meta name="title" content="CodeGuru - LeetCode Practice Tracker | Free DSA Progress Tracker" />
-        <meta name="description" content="Free LeetCode practice tracker with visual progress tracking. Monitor 794 coding problems (Easy, Medium, Hard) with interactive circular progress ring. Track DSA interview preparation locally - no signup required!" />
-        <meta name="keywords" content="leetcode tracker, leetcode progress tracker, coding practice tracker, dsa tracker, algorithm practice, data structures and algorithms, interview preparation, coding interview prep, leetcode problems, programming practice, leetcode statistics, coding progress, free leetcode tracker, codeguru, maitrek patel, faang preparation, competitive programming tracker, dsa sheet, dsa sheet 794" />
+        <meta name="description" content="Free LeetCode practice tracker with visual progress tracking. Monitor 629 coding problems (Easy, Medium, Hard) with interactive circular progress ring. Track DSA interview preparation locally - no signup required!" />
+        <meta name="keywords" content="leetcode tracker, leetcode progress tracker, coding practice tracker, dsa tracker, algorithm practice, data structures and algorithms, interview preparation, coding interview prep, leetcode problems, programming practice, leetcode statistics, coding progress, free leetcode tracker, codeguru, maitrek patel, faang preparation, competitive programming tracker, dsa sheet, dsa sheet 629" />
         <meta name="author" content="Maitrek Patel" />
         <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
         <link rel="canonical" href="https://codeguru.maitrekpatel.tech/" />
@@ -18,7 +18,7 @@
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://codeguru.maitrekpatel.tech/" />
         <meta property="og:title" content="CodeGuru - Free LeetCode Practice Tracker with Visual Progress" />
-        <meta property="og:description" content="Track your LeetCode journey with CodeGuru's beautiful visual progress tracker. 794 curated problems across Easy, Medium, and Hard difficulties. Interactive circular progress ring, local storage, no login required. Perfect for FAANG interview prep!" />
+        <meta property="og:description" content="Track your LeetCode journey with CodeGuru's beautiful visual progress tracker. 629 curated problems across Easy, Medium, and Hard difficulties. Interactive circular progress ring, local storage, no login required. Perfect for FAANG interview prep!" />
         <meta property="og:image" content="https://codeguru.maitrekpatel.tech/image.png" />
         <meta property="og:image:secure_url" content="https://codeguru.maitrekpatel.tech/image.png" />
         <meta property="og:image:width" content="1200" />
@@ -30,8 +30,8 @@
         <!-- Enhanced Twitter Card -->
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content="https://codeguru.maitrekpatel.tech/" />
-        <meta name="twitter:title" content="CodeGuru - Free LeetCode Practice Tracker | 794 DSA Problems" />
-        <meta name="twitter:description" content="Track your coding interview prep with visual progress tracking. 794 LeetCode problems, interactive progress ring, local storage. Free, no signup!" />
+        <meta name="twitter:title" content="CodeGuru - Free LeetCode Practice Tracker | 629 DSA Problems" />
+        <meta name="twitter:description" content="Track your coding interview prep with visual progress tracking. 629 LeetCode problems, interactive progress ring, local storage. Free, no signup!" />
         <meta name="twitter:image" content="https://codeguru.maitrekpatel.tech/image.png" />
         <meta name="twitter:image:alt" content="CodeGuru - LeetCode Practice Tracker Dashboard" />
         <meta name="twitter:creator" content="@maitrekpatel1612" />
@@ -73,7 +73,7 @@
           "name": "CodeGuru",
           "alternateName": "CodeGuru - LeetCode Practice Tracker",
           "url": "https://codeguru.maitrekpatel.tech/",
-          "description": "Free LeetCode practice tracker with visual progress tracking. Monitor 794 coding problems across Easy, Medium, and Hard difficulties with interactive circular progress ring. Perfect for DSA and interview preparation.",
+          "description": "Free LeetCode practice tracker with visual progress tracking. Monitor 629 coding problems across Easy, Medium, and Hard difficulties with interactive circular progress ring. Perfect for DSA and interview preparation.",
           "applicationCategory": "EducationalApplication",
           "operatingSystem": "Any",
           "offers": {
@@ -93,7 +93,7 @@
           },
           "featureList": [
             "Interactive circular progress ring",
-            "794 curated LeetCode problems",
+            "629 curated LeetCode problems",
             "Local storage - no login required",
             "Difficulty-based tracking (Easy, Medium, Hard)",
             "Real-time progress statistics",
@@ -287,26 +287,69 @@
                 left: 50%;
                 transform: translate(-50%, -50%);
                 text-align: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                pointer-events: none;
+            }
+            
+            .progress-display {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 0.8rem;
+            }
+            
+            .circular-progress:hover .progress-number {
+                transform: scale(1.05);
             }
 
             .progress-number {
-                font-size: 3.5rem;
-                font-weight: 900;
-                color: var(--text);
-                line-height: 1;
-            }
-
-            .progress-total {
-                font-size: 1.4rem;
-                color: #666;
+                font-size: 3rem;
                 font-weight: 700;
+                color: #ccc;
+                line-height: 1;
+                transition: all 0.3s ease;
             }
-
-            .progress-label {
-                font-size: 1rem;
-                color: #666;
-                margin-top: 0.6rem;
-                font-weight: 600;
+            
+            .progress-separator {
+                width: 80px;
+                height: 2px;
+                background: #444;
+                border-radius: 2px;
+            }
+            
+            .progress-count-label {
+                font-size: 3rem;
+                font-weight: 700;
+                color: #ccc;
+                line-height: 1;
+                transition: all 0.3s ease;
+            }
+            
+            @media (max-width: 767px) {
+                .circular-progress {
+                    width: 150px;
+                    height: 150px;
+                }
+                
+                .progress-number {
+                    font-size: 1.5rem;
+                }
+                
+                .progress-count-label {
+                    font-size: 1.5rem;
+                }
+                
+                .progress-separator {
+                    width: 50px;
+                }
+                
+                .progress-display {
+                    gap: 0.4rem;
+                }
             }
 
             .stats-grid {
@@ -328,39 +371,11 @@
                 position: relative;
                 overflow: hidden;
             }
-            
-            .stat-item::before {
-                content: '';
-                position: absolute;
-                left: 0;
-                top: 0;
-                bottom: 0;
-                width: 3px;
-                background: currentColor;
-                opacity: 0;
-                transition: opacity 0.3s ease;
-            }
-            
-            .stat-item.easy::before {
-                background: #00d9ff;
-            }
-            
-            .stat-item.medium::before {
-                background: #ffa500;
-            }
-            
-            .stat-item.hard::before {
-                background: #ff4757;
-            }
 
             .stat-item:hover {
                 border-color: var(--accent-muted);
                 transform: translateX(4px);
                 box-shadow: 0 2px 8px rgba(0, 255, 132, 0.15);
-            }
-            
-            .stat-item:hover::before {
-                opacity: 1;
             }
 
             .stat-label {
@@ -825,13 +840,22 @@
                 box-shadow: 0 0 0 1px var(--accent) inset, 0 2px 8px rgba(0, 255, 132, 0.15);
             }
 
+            .problem-content {
+                flex: 1;
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+            }
+
             .problem a {
                 text-decoration: none;
                 color: inherit;
                 font-weight: 500;
                 line-height: 1.5;
-                flex: 1;
                 transition: color 0.2s ease;
+                pointer-events: all;
+                cursor: pointer;
+                display: inline-block;
             }
             
             @media (max-width: 767px) {
@@ -1003,9 +1027,11 @@
                             <circle id="progress-hard" class="circular-progress-bar progress-bar-hard" cx="100" cy="100" r="90"></circle>
                         </svg>
                         <div class="progress-center">
-                            <div class="progress-number" id="total-solved-number">0</div>
-                            <div class="progress-total" id="total-problems">/ 794</div>
-                            <div class="progress-label">Solved</div>
+                            <div class="progress-display" id="progress-display">
+                                <div class="progress-number" id="total-solved-number">0</div>
+                                <div class="progress-separator"></div>
+                                <div class="progress-count-label">COUNT</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1148,12 +1174,16 @@
           <div class="problem-footer">
             <div class="checkbox ${isSolved ? 'checked' : ''}"></div>
           </div>
-          <a href="${q.link}" target="_blank">${q.title}</a>
+          <div class="problem-content">
+            <a href="${q.link}" target="_blank">${q.title}</a>
+          </div>
         `;
-                    div.querySelector('.checkbox').addEventListener('click', (e) => {
-                        e.stopPropagation();
+                    
+                    // Function to toggle solved status
+                    const toggleSolved = () => {
                         div.classList.toggle('solved');
-                        e.target.classList.toggle('checked');
+                        const checkbox = div.querySelector('.checkbox');
+                        checkbox.classList.toggle('checked');
                         
                         // Update localStorage using title as unique identifier
                         if (!solvedProblems[level]) {
@@ -1168,9 +1198,34 @@
                             solvedProblems[level].push(q.title);
                         }
                         saveSolvedState();
-                        
                         updateProgress(level);
+                    };
+                    
+                    // Get elements
+                    const link = div.querySelector('a');
+                    const problemContent = div.querySelector('.problem-content');
+                    
+                    // Click on problem content (outside link) marks as solved
+                    problemContent.addEventListener('click', (e) => {
+                        // Only toggle if NOT clicking the link
+                        if (e.target !== link) {
+                            toggleSolved();
+                        }
                     });
+                    
+                    // Click on checkbox marks as solved
+                    const checkbox = div.querySelector('.checkbox');
+                    checkbox.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        toggleSolved();
+                    });
+                    
+                    // Link click opens in new tab (default behavior)
+                    link.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        // Link opens normally
+                    });
+                    
                     list.appendChild(div);
                 });
             }
@@ -1272,10 +1327,11 @@
                 hardCircle.style.strokeDashoffset = `-${easyArcLength + mediumArcLength}`;
                 
                 // Update display based on toggle
+                const progressDisplay = document.getElementById('progress-display');
+                
                 if (showPercentage) {
-                    // Show percentages
-                    document.getElementById('total-solved-number').textContent = percent;
-                    document.getElementById('total-problems').textContent = '%';
+                    // Show percentage only - single centered text
+                    progressDisplay.innerHTML = `<div class="progress-number">${percent}%</div>`;
                     
                     const easyPercent = Math.round((solvedCount.easy / data.easy.length) * 100);
                     const mediumPercent = Math.round((solvedCount.medium / data.medium.length) * 100);
@@ -1285,9 +1341,12 @@
                     document.getElementById('medium-stat').textContent = `${mediumPercent}%`;
                     document.getElementById('hard-stat').textContent = `${hardPercent}%`;
                 } else {
-                    // Show counts
-                    document.getElementById('total-solved-number').textContent = totalSolved;
-                    document.getElementById('total-problems').textContent = `/ ${totalProblems}`;
+                    // Show count with separator and label
+                    progressDisplay.innerHTML = `
+                        <div class="progress-number">${totalSolved}</div>
+                        <div class="progress-separator"></div>
+                        <div class="progress-count-label">${totalProblems}</div>
+                    `;
                     
                     document.getElementById('easy-stat').textContent = `${solvedCount.easy}/${data.easy.length}`;
                     document.getElementById('medium-stat').textContent = `${solvedCount.medium}/${data.medium.length}`;
@@ -1304,7 +1363,7 @@
                 return str.charAt(0).toUpperCase() + str.slice(1);
             }
 
-            // Search functionality
+            // Search functionality - Global search across all difficulty levels
             function searchProblems(query) {
                 const searchInput = document.getElementById('search-input');
                 const clearBtn = document.getElementById('clear-search');
@@ -1317,7 +1376,7 @@
                     clearBtn.classList.remove('visible');
                 }
                 
-                // If search is empty, show all problems
+                // If search is empty, show all problems in current section
                 if (!query.trim()) {
                     resultsCount.textContent = '';
                     const allProblems = document.querySelectorAll('.problem');
@@ -1333,19 +1392,81 @@
                 }
                 
                 const searchTerm = query.toLowerCase();
-                let visibleCount = 0;
-                let totalCount = 0;
+                let matchedProblems = [];
                 
-                // Search across all loaded problems
-                const allProblems = document.querySelectorAll('.problem');
-                allProblems.forEach(problem => {
-                    totalCount++;
-                    const link = problem.querySelector('a');
-                    const title = link.textContent.toLowerCase();
+                // Search across ALL difficulty levels in data
+                ['easy', 'medium', 'hard'].forEach(level => {
+                    if (data[level]) {
+                        data[level].forEach((problem, idx) => {
+                            if (problem.title.toLowerCase().includes(searchTerm)) {
+                                matchedProblems.push({
+                                    level: level,
+                                    problem: problem,
+                                    index: idx
+                                });
+                            }
+                        });
+                    }
+                });
+                
+                // Show results count
+                if (matchedProblems.length === 0) {
+                    resultsCount.innerHTML = `
+                        <div class="no-results">
+                            <div class="no-results-icon">🔍</div>
+                            <div>No problems found matching "${query}"</div>
+                        </div>
+                    `;
+                    // Hide all problems
+                    const allProblems = document.querySelectorAll('.problem');
+                    allProblems.forEach(problem => {
+                        problem.style.display = 'none';
+                    });
+                } else {
+                    resultsCount.textContent = `Found ${matchedProblems.length} problem${matchedProblems.length !== 1 ? 's' : ''} matching "${query}"`;
                     
-                    if (title.includes(searchTerm)) {
+                    // Find which section(s) have matches
+                    const sectionsWithMatches = [...new Set(matchedProblems.map(m => m.level))];
+                    
+                    // If current section doesn't have matches, switch to first section with matches
+                    const currentActiveBtn = document.querySelector('.btn.active');
+                    const currentLevel = currentActiveBtn ? currentActiveBtn.getAttribute('onclick').match(/'(\w+)'/)[1] : 'easy';
+                    
+                    if (!sectionsWithMatches.includes(currentLevel) && sectionsWithMatches.length > 0) {
+                        // Switch to the first section that has matches
+                        const targetLevel = sectionsWithMatches[0];
+                        const targetBtn = document.querySelector(`.btn[onclick*="'${targetLevel}'"]`);
+                        if (targetBtn) {
+                            loadLevel(targetLevel, targetBtn);
+                            // Wait for section to load, then apply search filter
+                            setTimeout(() => applySearchFilter(query, matchedProblems), 100);
+                        }
+                    } else {
+                        // Current section has matches or search across current view
+                        applySearchFilter(query, matchedProblems);
+                    }
+                }
+            }
+            
+            // Helper function to apply search filter to visible problems
+            function applySearchFilter(query, matchedProblems) {
+                const allProblems = document.querySelectorAll('.problem');
+                let visibleInCurrentSection = 0;
+                
+                allProblems.forEach(problem => {
+                    const problemTitle = problem.getAttribute('data-title');
+                    const problemLevel = problem.getAttribute('data-level');
+                    
+                    // Check if this problem is in the matched list
+                    const isMatched = matchedProblems.some(m => 
+                        m.problem.title === problemTitle && m.level === problemLevel
+                    );
+                    
+                    const link = problem.querySelector('a');
+                    
+                    if (isMatched) {
                         problem.style.display = '';
-                        visibleCount++;
+                        visibleInCurrentSection++;
                         
                         // Highlight matching text
                         const originalText = link.textContent;
@@ -1357,18 +1478,6 @@
                         link.innerHTML = link.textContent;
                     }
                 });
-                
-                // Show results count
-                if (visibleCount === 0) {
-                    resultsCount.innerHTML = `
-                        <div class="no-results">
-                            <div class="no-results-icon">🔍</div>
-                            <div>No problems found matching "${query}"</div>
-                        </div>
-                    `;
-                } else {
-                    resultsCount.textContent = `Found ${visibleCount} problem${visibleCount !== 1 ? 's' : ''} matching "${query}"`;
-                }
             }
 
             function clearSearch() {
