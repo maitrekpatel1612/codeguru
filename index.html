@@ -646,7 +646,7 @@
 
             .clear-search {
                 position: absolute;
-                right: 1rem;
+                right: 3.5rem;
                 background: transparent;
                 border: none;
                 color: var(--subtext);
@@ -660,7 +660,7 @@
             
             @media (max-width: 767px) {
                 .clear-search {
-                    right: 0.85rem;
+                    right: 3rem;
                     font-size: 1.3rem;
                 }
             }
@@ -668,6 +668,38 @@
             .clear-search:hover {
                 color: var(--accent);
                 transform: scale(1.1);
+            }
+            
+            .random-btn {
+                position: absolute;
+                right: 1rem;
+                background: transparent;
+                border: none;
+                color: var(--subtext);
+                cursor: pointer;
+                font-size: 1.5rem;
+                padding: 0.25rem;
+                transition: all 0.3s ease;
+                line-height: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            @media (max-width: 767px) {
+                .random-btn {
+                    right: 0.85rem;
+                    font-size: 1.3rem;
+                }
+            }
+            
+            .random-btn:hover {
+                color: var(--accent);
+                transform: rotate(180deg) scale(1.1);
+            }
+            
+            .random-btn:active {
+                transform: rotate(360deg) scale(0.95);
             }
 
             .clear-search.visible {
@@ -1069,6 +1101,7 @@
                     oninput="searchProblems(this.value)"
                 />
                 <button class="clear-search" id="clear-search" onclick="clearSearch()">✕</button>
+                <button class="random-btn" id="random-btn" onclick="openRandomProblem()" title="Open random problem">🎲</button>
             </div>
             <div id="search-results-count" class="search-results-count"></div>
         </div>
@@ -1484,6 +1517,25 @@
                 const searchInput = document.getElementById('search-input');
                 searchInput.value = '';
                 searchProblems('');
+            }
+            
+            function openRandomProblem() {
+                // Get all difficulty levels
+                const levels = ['easy', 'medium', 'hard'];
+                
+                // Pick a random level
+                const randomLevel = levels[Math.floor(Math.random() * levels.length)];
+                
+                // Get all problems from that level
+                const problems = data[randomLevel];
+                
+                if (problems && problems.length > 0) {
+                    // Pick a random problem
+                    const randomProblem = problems[Math.floor(Math.random() * problems.length)];
+                    
+                    // Open the problem in a new tab
+                    window.open(randomProblem.link, '_blank');
+                }
             }
 
             loadQuestions();
