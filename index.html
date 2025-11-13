@@ -511,6 +511,55 @@
                 }
             }
 
+            /* Filter Buttons */
+            .filter-buttons {
+                display: flex;
+                gap: 0.75rem;
+                margin-bottom: 1.5rem;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            @media (max-width: 767px) {
+                .filter-buttons {
+                    gap: 0.5rem;
+                    margin-bottom: 1rem;
+                }
+            }
+
+            .filter-btn {
+                background: var(--hover);
+                color: var(--text);
+                border: 1px solid var(--border);
+                padding: 0.6rem 1.2rem;
+                border-radius: 0.5rem;
+                font-size: 0.9rem;
+                cursor: pointer;
+                font-weight: 600;
+                transition: all 0.3s ease;
+                text-transform: capitalize;
+            }
+            
+            @media (max-width: 767px) {
+                .filter-btn {
+                    padding: 0.5rem 1rem;
+                    font-size: 0.8rem;
+                }
+            }
+
+            .filter-btn:hover {
+                border-color: var(--accent);
+                color: var(--accent);
+                background: rgba(0, 255, 132, 0.1);
+                transform: translateY(-2px);
+            }
+
+            .filter-btn.active {
+                background: var(--accent);
+                color: #000;
+                border-color: var(--accent);
+            }
+
             .small-btn {
                 background: transparent;
                 border: 2px solid var(--accent);
@@ -910,6 +959,11 @@
                 const section = document.createElement('div');
                 section.className = 'section';
                 section.innerHTML = `
+        <div class="filter-buttons">
+            <button class="filter-btn active" onclick="filterProblems('${level}', 'all', this)">All</button>
+            <button class="filter-btn" onclick="filterProblems('${level}', 'solved', this)">Solved</button>
+            <button class="filter-btn" onclick="filterProblems('${level}', 'unsolved', this)">Unsolved</button>
+        </div>
         <div id="${level}-list" class="problem-grid"></div>
       `;
                 container.appendChild(section);
@@ -955,6 +1009,29 @@
                         updateProgress(level);
                     });
                     list.appendChild(div);
+                });
+            }
+
+            function filterProblems(level, filter, btn) {
+                // Update active button
+                const filterButtons = btn.parentElement.querySelectorAll('.filter-btn');
+                filterButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                // Get all problems in the current level
+                const list = document.getElementById(`${level}-list`);
+                const problems = list.querySelectorAll('.problem');
+
+                problems.forEach(problem => {
+                    const isSolved = problem.classList.contains('solved');
+                    
+                    if (filter === 'all') {
+                        problem.style.display = '';
+                    } else if (filter === 'solved') {
+                        problem.style.display = isSolved ? '' : 'none';
+                    } else if (filter === 'unsolved') {
+                        problem.style.display = !isSolved ? '' : 'none';
+                    }
                 });
             }
 
