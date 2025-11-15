@@ -253,6 +253,8 @@
                 stroke-width: 12;
                 stroke-linecap: butt;
                 transition: stroke-dashoffset 1s cubic-bezier(0.4, 0, 0.2, 1);
+                stroke-dasharray: 0 565.48; /* Initialize to prevent flash */
+                stroke-dashoffset: 0;
             }
             
             /* Background sections (unsolved) */
@@ -490,6 +492,7 @@
                 border-color: var(--accent);
                 color: var(--accent);
                 background: rgba(255, 255, 255, 0.05);
+                -webkit-backdrop-filter: blur(10px);
                 backdrop-filter: blur(10px);
                 transform: translateY(-2px);
             }
@@ -1062,7 +1065,7 @@
                             <div class="progress-display" id="progress-display">
                                 <div class="progress-number" id="total-solved-number">0</div>
                                 <div class="progress-separator"></div>
-                                <div class="progress-count-label">COUNT</div>
+                                <div class="progress-count-label">629</div>
                             </div>
                         </div>
                     </div>
@@ -1070,15 +1073,15 @@
                 <div class="stats-grid">
                     <div class="stat-item easy">
                         <span class="stat-label easy">Easy</span>
-                        <span class="stat-value" id="easy-stat">0/104</span>
+                        <span class="stat-value" id="easy-stat">0/87</span>
                     </div>
                     <div class="stat-item medium">
                         <span class="stat-label medium">Med.</span>
-                        <span class="stat-value" id="medium-stat">0/500</span>
+                        <span class="stat-value" id="medium-stat">0/399</span>
                     </div>
                     <div class="stat-item hard">
                         <span class="stat-label hard">Hard</span>
-                        <span class="stat-value" id="hard-stat">0/190</span>
+                        <span class="stat-value" id="hard-stat">0/143</span>
                     </div>
                 </div>
             </div>
