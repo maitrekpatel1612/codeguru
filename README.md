@@ -1,6 +1,6 @@
 ![CodeGuru Banner](banner.png)
 
-**Live Demo:** [codeguru.maitrekpatel.tech](https://codeguru.maitrekpatel.tech/)
+**Live Demo:** [codeguru.maitrekpatel.in](https://codeguru.maitrekpatel.in/)
 
 A beautiful, modern LeetCode practice problem tracker with visual progress tracking. Track your coding journey across 629 problems
 with an interactive circular progress ring, difficulty-based color segments, and automatic local storage - no login required.
@@ -19,4 +19,4 @@ with an interactive circular progress ring, difficulty-based color segments, and
 
 ## Author
 
-**Maitrek Patel** - [maitrekpatel.tech](https://maitrekpatel.tech) | [@maitrekpatel1612](https://github.com/maitrekpatel1612)
+**Maitrek Patel** - [maitrekpatel.tech](https://maitrekpatel.in) | [@maitrekpatel1612](https://github.com/maitrekpatel1612)
